@@ -1,3 +1,5 @@
+package RoomTests;
+
 import Armour.SteelArmour;
 import Enemies.Orc;
 import Enemies.Troll;
@@ -26,7 +28,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class RoomTest {
-
     Barbarian barbarian;
     Dwarf dwarf;
     Knight knight;
@@ -48,7 +49,6 @@ public class RoomTest {
     Ogre ogre;
 
     ILoot loot;
-
     ArcaneWave arcaneWave;
     GoldChest goldChest;
 
@@ -57,7 +57,6 @@ public class RoomTest {
     FinalRoom finalRoom;
     SteelArmour steelArmour;
     Room room;
-
 
     @Before
     public void setUP(){
@@ -102,9 +101,9 @@ public class RoomTest {
     }
 
     @Test
-    public void AttacksTest(){
+    public void knightVsTrollTest(){
         knight.takeDamage(midRoom.getEnemy(troll.getWeapon(axe).attack(25)));
-        troll.takeDamage(orc.getWeapon(axe).attack(15));
+        midRoom.getEnemy(troll.takeDamage(orc.getWeapon(axe).attack(15)));
         entranceRoom.getLoot(goldChest).loot(25);
         assertEquals(125, knight.getNoOfHealthPoints());
         assertEquals(35, troll.getNoOfHealthPoints());
@@ -113,7 +112,7 @@ public class RoomTest {
 
     @Test
     public void vendingMachineMassiveAttackTest(){
-        knight.takeDamage(vendingMachine.getWeapon(cocaCola).attack(1000));
+        knight.takeDamage(entranceRoom.getEnemy(vendingMachine.getWeapon(cocaCola).attack(1000)));
         assertEquals(-850, knight.getNoOfHealthPoints());
     }
 

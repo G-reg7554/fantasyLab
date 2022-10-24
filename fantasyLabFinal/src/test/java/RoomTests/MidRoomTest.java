@@ -1,3 +1,5 @@
+package RoomTests;
+
 import Armour.SteelArmour;
 import Enemies.Orc;
 import Enemies.Troll;
@@ -25,8 +27,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class FinalRoomTest {
-
+public class MidRoomTest {
     Barbarian barbarian;
     Dwarf dwarf;
     Knight knight;
@@ -85,13 +86,37 @@ public class FinalRoomTest {
         cleric = new Cleric("Herby Harry", 88, 0, potion);
         steelArmour = new SteelArmour(0);
     }
+
     @Test
-    public void FinalWaveTest(){
-        warlock.takeDamage(troll.getWeapon(cocaCola).attack(40));
-        warlock.giveHeal(cleric.getHeal(potion).heal(20));
-        finalRoom.getEnemy(vendingMachine.takeDamage(barbarian.getWeapon(axe).attack(180)));
-        finalRoom.getEnemy(vendingMachine.takeDamage(warlock.getSpells(fireball).cast(20)));
-        assertEquals(180,warlock.noOfHealthPoints);
-        assertEquals(0, vendingMachine.getNoOfHealthPoints());
+    public void clearFirstWaveTest(){
+        barbarian.takeDamage(midRoom.getEnemy(troll.getWeapon(sword).attack(50)));
+        barbarian.giveHeal(cleric.getHeal(potion).heal(15));
+        barbarian.giveHeal(cleric.getHeal(herb).heal(15));
+        midRoom.getEnemy(troll.takeDamage(barbarian.getWeapon(club).attack(50)));
+        assertEquals(80, barbarian.getNoOfHealthPoints());
+        assertEquals(0, troll.getNoOfHealthPoints());
+    }
+
+    @Test
+    public void clearSecondWave(){
+        midRoom.getEnemy(orc.takeDamage(warlock.getDefence(dragon).defend(15)));
+        midRoom.getEnemy(orc.takeDamage(wizard.getSpells(fireball).cast(15)));
+        midRoom.getEnemy(orc.takeDamage(wizard.getDefence(dragon).defend(20)));
+        assertEquals(0, orc.getNoOfHealthPoints());
+    }
+
+    @Test
+    public void finalWaveTest(){
+        barbarian.takeDamage(troll.getWeapon(axe).attack(99));
+        barbarian.giveHeal(cleric.getHeal(herb).heal(20));
+        midRoom.getEnemy(troll.takeDamage(dwarf.getWeapon(sword).attack(50)));
+        assertEquals(21, barbarian.getNoOfHealthPoints());
+        assertEquals(0, troll.getNoOfHealthPoints());
+    }
+
+    @Test
+    public void gettingLootBarbarian(){
+        barbarian.giveLoot(midRoom.getLoot(goldChest).loot(200));
+        assertEquals(200, barbarian.getNoOfGoldCoins());
     }
 }

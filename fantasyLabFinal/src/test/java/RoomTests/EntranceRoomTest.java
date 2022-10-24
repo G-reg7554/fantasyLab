@@ -1,3 +1,5 @@
+package RoomTests;
+
 import Armour.SteelArmour;
 import Enemies.Orc;
 import Enemies.Troll;
